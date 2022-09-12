@@ -10,7 +10,7 @@ inputs:
     required: false
   files:
     description: "Glob pattern of files to be linted."
-    default: "**/*"
+    default: "**/*{.js,.jsx,.ts,.tsx}"
     required: false
   ignore:
     description: "Glob pattern to ignore from linting."
