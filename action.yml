@@ -10,7 +10,7 @@ inputs:
     required: false
   files:
     description: "Glob pattern of files to be linted."
-    default: "**/*"
+    default: "**/*{.js,.jsx,.ts,.tsx}"
     required: false
   ignore:
     description: "Glob pattern to ignore from linting."
@@ -24,7 +24,7 @@ inputs:
     default: "false"
     required: false
 runs:
-  using: "node12"
+  using: "node16"
   main: "lib/index.js"
 branding:
   icon: "check-circle"
