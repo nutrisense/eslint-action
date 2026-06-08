@@ -41,7 +41,7 @@ async function getFilesFromPR(client: Octokit, prNumber: number): Promise<string
       hasNextPage = result.hasNextPage;
       startCursor = result.endCursor;
     } catch (err) {
-      core.error(err);
+      core.error(err as Error);
       core.setFailed("Error occurred getting changed files.");
       hasNextPage = false;
     }

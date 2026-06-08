@@ -8,7 +8,7 @@ export async function fetchFilesBatchPR(
   repo: string,
   startCursor?: string
 ): Promise<PrResponse> {
-  const { repository } = await client.graphql(
+  const { repository } = (await client.graphql(
     `
     query ChangedFilesBatch($owner: String!, $repo: String!, $prNumber: Int!, $startCursor: String) {
       repository(owner: $owner, name: $repo) {
@@ -31,7 +31,16 @@ export async function fetchFilesBatchPR(
     }
   `,
     { owner, repo, prNumber, startCursor }
-  );
+  )) as {
+    repository: {
+      pullRequest: {
+        files: {
+          pageInfo: { hasNextPage?: boolean; endCursor?: string };
+          edges: { node: { path: string } }[];
+        };
+      } | null;
+    };
+  };
 
   const pr = repository.pullRequest;
 
@@ -78,7 +87,7 @@ export async function fetchFilesBatchCommit(
 
     return filesChanged;
   } catch (err) {
-    core.error(err);
+    core.error(err as Error);
     core.setFailed("Error occurred getting files from commit.");
     return [];
   }

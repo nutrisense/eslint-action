@@ -91,7 +91,8 @@ async function run(): Promise<void> {
       });
     }
   } catch (err) {
-    core.setFailed(err.message ? err.message : "Error linting files.");
+    const message = err instanceof Error ? err.message : "";
+    core.setFailed(message ? message : "Error linting files.");
   }
 }
 
